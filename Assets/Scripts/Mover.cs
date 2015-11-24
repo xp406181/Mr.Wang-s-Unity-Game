@@ -6,7 +6,7 @@ public class Mover : GameObj {
 
 	private Rigidbody boltRB = null;
 	private const string boundaryTag = "Boundary";
-	private const string ownPlayerTag = "OwnPlayerTag";
+	private const string ownPlayerTag = "OwnPlayer";
 
 	void Start () 
 	{
@@ -16,12 +16,12 @@ public class Mover : GameObj {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.name == boundaryTag)
+		if(other.tag == boundaryTag)
 		{
 			return ;
 		}
 		
-		if(other.name == ownPlayerTag)
+		if(other.tag == ownPlayerTag)
 		{
 			return;
 		}
@@ -29,10 +29,10 @@ public class Mover : GameObj {
 		GameObj otherObj = other.transform.GetComponent<GameObj>();
 
 		base.UnderAttack(otherObj.Attack);
-		Debug.Log(string.Format("name:{0},livestate:{1}",name,base.LiveState));
 		
 		if(base.LiveState == false)
 		{
+
 			Destroy(gameObject);
 		}
 	}

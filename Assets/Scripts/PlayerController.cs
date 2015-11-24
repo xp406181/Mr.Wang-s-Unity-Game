@@ -16,6 +16,7 @@ public class PlayerController : GameObj {
 	public GameObject Shot;
 	public GameObject PlayerExplosion;
 
+	private AudioSource audioSource;
 	private Transform shotSpawn;
 	private Transform playerTrans = null;
 	private Rigidbody playerRB = null;
@@ -29,6 +30,7 @@ public class PlayerController : GameObj {
 		playerTrans = transform;
 		playerRB = playerTrans.GetComponent<Rigidbody> ();
 		shotSpawn = playerTrans.Find("ShotSpawn");
+		audioSource = playerTrans.GetComponent<AudioSource>();
 
 		if(Shot != null)
 		{
@@ -42,9 +44,9 @@ public class PlayerController : GameObj {
 		{
 			nextFire = Time.time + 1 / FireSpeed;
 			GameObject bolt = Instantiate(Shot,shotSpawn.position,shotSpawn.rotation) as GameObject;
-			bolt.tag = OwnBoltTag;
+			bolt.tag = OwnBoltTag; 
+			audioSource.Play();
 		}
-//		Debug.Log(string.Format("name:{0},livestate:{1}",name,base.LiveState));
 	}
 
 	void FixedUpdate()
@@ -67,20 +69,19 @@ public class PlayerController : GameObj {
 		
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.name == boundaryTag)
+		if(other.tag == boundaryTag)
 		{
 			return ;
 		}
 
-		if(other.name == OwnBoltTag)
+		if(other.tag == OwnBoltTag)
 		{
 			return;
 		}
 
 		GameObj otherObj = other.transform.GetComponent<GameObj>();
-		Debug.Log(other.name);
 		base.UnderAttack(otherObj.Attack);
-		Debug.Log(string.Format("name:{0},livestate:{1}",name,base.LiveState));
+
 
 		if(base.LiveState == false)
 		{

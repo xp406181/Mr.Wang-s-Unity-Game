@@ -7,7 +7,7 @@ public class DestroyByContact : GameObj {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.name == boundaryTag)
+		if(other.tag == boundaryTag)
 		{
 			return ;
 		}
@@ -16,7 +16,7 @@ public class DestroyByContact : GameObj {
 		
 		base.UnderAttack(otherObj.Attack);
 
-		Debug.Log(string.Format("name:{0},livestate:{1}",name,base.LiveState));
+	
 
 		if(base.LiveState == false)
 		{
@@ -26,6 +26,6 @@ public class DestroyByContact : GameObj {
 	}
 	void Update()
 	{
-//		Debug.Log(string.Format("name:{0},livestate:{1}",name,base.LiveState));
+
 	}
 }
