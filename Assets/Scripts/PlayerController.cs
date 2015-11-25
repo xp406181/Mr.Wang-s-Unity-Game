@@ -16,6 +16,7 @@ public class PlayerController : GameObj {
 	public GameObject Shot;
 	public GameObject PlayerExplosion;
 
+	private AsteRoidController m_GameController;
 	private AudioSource audioSource;
 	private Transform shotSpawn;
 	private Transform playerTrans = null;
@@ -35,6 +36,18 @@ public class PlayerController : GameObj {
 		if(Shot != null)
 		{
 			fireFlag = true;
+		}
+
+		GameObject obj = GameObject.FindGameObjectWithTag("GameController");
+		
+		if(obj != null)
+		{
+			m_GameController = obj.GetComponent<AsteRoidController>();
+		}
+		
+		if(m_GameController == null)
+		{
+			Debug.Log("Can't find AsteRoidController SCRIPT");
 		}
 	}
 
@@ -87,6 +100,7 @@ public class PlayerController : GameObj {
 		{
 			Instantiate(PlayerExplosion,playerTrans.position,playerTrans.rotation);
 			Destroy(gameObject);
+			m_GameController.GameOver();
 		}
 	}
 }
